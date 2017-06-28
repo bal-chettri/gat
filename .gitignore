@@ -1,0 +1,30 @@
+# Compiled Object files
+*.o
+*.obj
+
+# Visual Studio Project User files
+*.user
+*.suo
+
+# VC++ Intellisese Database
+*.sdf
+*.opensdf
+
+# VC++ Program databasde
+*.pdb
+
+# VC++ Intermediate files
+*.vcxprojResolveAssemblyReference.cache
+*.idb
+*.lastbuildstate
+*.log
+*.tlog
+*_manifest.rc
+*.embed.manifest
+*.intermediate.manifest
+
+# Executable files
+*.exe
+
+# VC++ files
+*.ilk

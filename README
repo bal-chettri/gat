@@ -1,0 +1,61 @@
+README:
+
+gat/masm85 is an educational purpose assembler project that demonstrates how an assembler can be implemented.
+
+Features:
+
+- gat(generic assembler toolkit) as a backend for the assembler provides generic code like parsing, scanning etc.
+
+- masm85: Full implementation and front-end for Intel 8085A micro processor.
+
+- Addditional frondends could be possibly added for other machine architectures.
+
+- Implemented in C language without any external libraries.
+
+The choice of 8085A processor is for simplicity.
+
+How to Build on Windows:
+
+- Visual Studio 10 project file is available under builds/vs_2010 folder. Open gat.sln and build. Building the project generates masm85.exe under bin folder.
+
+- Optionally, to build from command line, goto builds/vs_2010 directory and type MSBuild.
+
+  C:\...builds\vs_2010> MSBuild
+
+  masm85.exe will be generated under bin folder.
+
+How to build on other platforms like Linux/Mac/cygwin:
+
+- For other platforms you need gcc and make tools to build. From the project's root folder, type 'make'. or 'make masm85' to build. Ouput will be generated under bin folder.
+
+How to Test:
+
+Once you have build the assembler, you can test it using sample source file test.asm provided under tests/ folder.
+
+$ ./bin/masm85
+
+masm85 - micro assembler for Intel 8085 micro processor
+Version : 0.0.1
+
+Usage: masm85 [<input-path>] [options]
+
+Options:
+  [-hex | -85]               : generate HEX or 85 file (default is -hex)
+  [-o<output-path>]          : specify output file path
+  [-dbg[<debug-ouput-path>]] : generate debug DBG file
+  
+To assemble the source file in HEX format type:
+
+$ ./bin/masm85.exe ./tests/test.asm -hex
+scanning ./tests/test.asm
+assembling ./tests/test.asm
+written 8 bytes to ./tests/test.hex
+0 error(s) 0 warning(s)
+
+To assemble the source file in binary format type:
+
+$ ./bin/masm85.exe ./tests/test.asm -85
+scanning ./tests/test.asm
+assembling ./tests/test.asm
+written 8 bytes to ./tests/test.85
+0 error(s) 0 warning(s)

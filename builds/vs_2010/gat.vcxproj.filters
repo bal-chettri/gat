@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="headers">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="tests">
+      <UniqueIdentifier>{1bef7142-19e8-4bdc-b046-b906a989b384}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="src\gat">
+      <UniqueIdentifier>{bc37ef03-22ca-454d-b86e-d5fc7a54d56b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\masm86">
+      <UniqueIdentifier>{1c4bba86-7b1b-485c-a590-212ba15fdd98}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\gat\gat_conv.c">
+      <Filter>src\gat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\gat\gat_tokenizer.c">
+      <Filter>src\gat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\gat\gat_core.c">
+      <Filter>src\gat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\gat\gat_io.c">
+      <Filter>src\gat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\gat\gat_lexer.c">
+      <Filter>src\gat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\gat\gat_parser.c">
+      <Filter>src\gat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\gat\gat_str.c">
+      <Filter>src\gat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\gat\gat_sysutils.c">
+      <Filter>src\gat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\gat\gat_table.c">
+      <Filter>src\gat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\masm85\masm85_arch.c">
+      <Filter>src\masm86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\masm85\masm85_table.c">
+      <Filter>src\masm86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\masm85\masm85_callbacks.c">
+      <Filter>src\masm86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\masm85\masm85_cmdline.c">
+      <Filter>src\masm86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\masm85\masm85_emit_bin.c">
+      <Filter>src\masm86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\masm85\masm85_emit_hex.c">
+      <Filter>src\masm86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\masm85\masm85_filter.c">
+      <Filter>src\masm86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\masm85\masm85_main.c">
+      <Filter>src\masm86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\masm85\masm85_emit_dbg.c">
+      <Filter>src\masm86</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\gat\gat.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\gat\gat_conv.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\gat\gat_core.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\gat\gat_err.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\gat\gat_io.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\gat\gat_lexer.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\gat\gat_parser.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\gat\gat_str.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\gat\gat_sysutils.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\gat\gat_table.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\gat\gat_tokenizer.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\gat\gat_types.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\tests\test.asm">
+      <Filter>tests</Filter>
+    </None>
+  </ItemGroup>
+</Project>
