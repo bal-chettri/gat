@@ -8,7 +8,7 @@ Features:
 
 - masm85: Full implementation and front-end for Intel 8085A micro processor.
 
-- Addditional frondends could be possibly added for other machine architectures.
+- Addditional frontends could be possibly added for other machine architectures.
 
 - Implemented in C language without any external libraries.
 
@@ -26,7 +26,7 @@ How to Build on Windows:
 
 How to build on other platforms like Linux/Mac/cygwin:
 
-- For other platforms you need gcc and make tools to build. From the project's root folder, type 'make'. or 'make masm85' to build. Ouput will be generated under bin folder.
+- For other platforms you need gcc and make tools to build. From the project's root folder, type 'make'. or 'make masm85' to build. Output will be generated under bin folder.
 
 How to Test:
 
