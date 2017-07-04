@@ -87,12 +87,12 @@ static void masm85_get_code_size (gat *ga, const gat_instr *instr) {
         switch (options) {
         case GAT_OPRND_BYTE:
             if (options == 0) /* immediate value? */ {
-                ++ga->g_bin_size; /* add byte to opcode */
+                ++ga->bin_size; /* add byte to opcode */
             }
             break;
 
         case GAT_OPRND_DBL:
-            ga->g_bin_size+= 2; /* always add a dbl to opcode */
+            ga->bin_size+= 2; /* always add a dbl to opcode */
             break;
 
         default:
@@ -108,30 +108,30 @@ static void masm85_gen_code (gat *ga, const gat_instr *instr) {
     for (i = 0; i < instr->num_tokens; i++) {
         const uint8_t optype = instr->type_operands[i];
         const uint8_t options = instr->type_options[i];
-        const uint16_t value = ga->g_arr_cooked_tokens[i + 1];
+        const uint16_t value = ga->arr_cooked_tokens[i + 1];
 
         switch (optype) {
         case GAT_OPRND_REG8:
         case GAT_OPRND_REG16:
             /* register code in low-order; options is shift mask */
-            ga->g_bin[0]|=  (uint8_t)(value & 0x00FF) << options;
+            ga->bin[0]|=  (uint8_t)(value & 0x00FF) << options;
             break;
 
         case GAT_OPRND_BYTE:
             if ( options == 0 ) /* immediate? */ {
                 /* byte in low-order; immediate value */
-                ga->g_bin[ga->g_bin_size++] = (uint8_t)(value & 0x00FF);
+                ga->bin[ga->bin_size++] = (uint8_t)(value & 0x00FF);
             } else {
                 /* byte in low-order; options is shift mask */
-                ga->g_bin[0]|= (uint8_t)(value & 0x00FF) << options;
+                ga->bin[0]|= (uint8_t)(value & 0x00FF) << options;
             }
             break;
 
         case GAT_OPRND_DBL:
             /* immediate word value */
-            ga->g_bin[ga->g_bin_size] = (uint8_t)(value & 0x00FF);
-            ga->g_bin[ga->g_bin_size + 1] = (uint8_t)((value >> 8) & 0x00FF);
-            ga->g_bin_size+= 2;
+            ga->bin[ga->bin_size] = (uint8_t)(value & 0x00FF);
+            ga->bin[ga->bin_size + 1] = (uint8_t)((value >> 8) & 0x00FF);
+            ga->bin_size+= 2;
         }
     }
 }

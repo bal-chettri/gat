@@ -54,7 +54,7 @@ int gat_read_line (gat *ga) {
     int flag_done;
     
     /* clear buffer */
-    ga->g_str_line[0] = '\0';
+    ga->str_line[0] = '\0';
     flag_done = 0;
     
     while (!feof(fpin) && !flag_done) {
@@ -64,16 +64,16 @@ int gat_read_line (gat *ga) {
 
         /* read line */
         fgets (buff, GAT_MAX_LINEBUFF_SIZE, fpin);
-        ++ga->g_line_num;
+        ++ga->line_num;
         
         /* trim */
-        gat_trim (buff, ga->g_str_line);
-        if (ga->g_str_line[0] != '\0') {
+        gat_trim (buff, ga->str_line);
+        if (ga->str_line[0] != '\0') {
             flag_done = 1;
         }
     }
 
-    if (strlen(ga->g_str_line) > 0) {
+    if (strlen(ga->str_line) > 0) {
         return 1;
     }
     return 0;

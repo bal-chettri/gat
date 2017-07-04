@@ -76,35 +76,35 @@ void masm85_process_commandline (gat *ga, int argc, char *argv[]) {
     }
 
     /* scan command line for switches */
-    ga->g_cmdline_flags = gat_cmdln_scan_switches (&cmdinfo, arr_cmdline_switches, 
+    ga->cmdline_flags = gat_cmdln_scan_switches (&cmdinfo, arr_cmdline_switches, 
                                                     arr_cmdline_switchflags, 
                                                     GAT_NUM_SWITCHES );
     
     /* see if -hex and -85 are both specified */
-    if ( (ga->g_cmdline_flags & MASM85_SWITCH_HEX) && 
-         (ga->g_cmdline_flags & MASM85_SWITCH_85) ) {
+    if ( (ga->cmdline_flags & MASM85_SWITCH_HEX) && 
+         (ga->cmdline_flags & MASM85_SWITCH_85) ) {
         gat_fatal_error (ga, 1, "-hex and -85 switches can't be used together");
     }
     
     /* check for invalid switches */
     if (g_input_path[0] == '\0') {
         /* these switches can't be used without input-path */
-        if ( (ga->g_cmdline_flags & MASM85_SWITCH_HEX) || 
-             (ga->g_cmdline_flags & MASM85_SWITCH_85) ||
-             (ga->g_cmdline_flags & MASM85_SWITCH_O) || 
-             (ga->g_cmdline_flags & MASM85_SWITCH_DBG) ) 
+        if ( (ga->cmdline_flags & MASM85_SWITCH_HEX) || 
+             (ga->cmdline_flags & MASM85_SWITCH_85) ||
+             (ga->cmdline_flags & MASM85_SWITCH_O) || 
+             (ga->cmdline_flags & MASM85_SWITCH_DBG) ) 
         {
             gat_fatal_error (ga, GAT_ERR_INVALID_INPUT_PATH, "input-path not specified");
         }
     }
 
     /* set -hex if -hex and -85 are both unspecified */
-    if ( !(ga->g_cmdline_flags & MASM85_SWITCH_HEX) && !(ga->g_cmdline_flags & MASM85_SWITCH_85) ) {
-        ga->g_cmdline_flags|= MASM85_SWITCH_HEX;
+    if ( !(ga->cmdline_flags & MASM85_SWITCH_HEX) && !(ga->cmdline_flags & MASM85_SWITCH_85) ) {
+        ga->cmdline_flags|= MASM85_SWITCH_HEX;
     }
 
     /* show usage if -help is present */
-    if (ga->g_cmdline_flags & MASM85_SWITCH_HELP) {
+    if (ga->cmdline_flags & MASM85_SWITCH_HELP) {
         masm85_usage (ga);
     }
 
@@ -112,30 +112,30 @@ void masm85_process_commandline (gat *ga, int argc, char *argv[]) {
         masm85_usage (ga);
     } else {
         /* make output path */
-        if ( ga->g_cmdline_flags & MASM85_SWITCH_O ) {
+        if ( ga->cmdline_flags & MASM85_SWITCH_O ) {
             gat_cmdln_get_param ( &cmdinfo, "-o", g_output_path );
             if (g_output_path[0] == '\0') {
                 gat_fatal_error (ga, GAT_ERR_INVALID_OUTPUT_PATH, "output-path not specified");
             }
         } else {
-            ga->g_cmdline_flags|= MASM85_SWITCH_O;
+            ga->cmdline_flags|= MASM85_SWITCH_O;
             strcpy (g_output_path, g_input_path);
             /* attach .hex or .85 extension if required */
             gat_attach_extension ( ga, g_output_path, 
-                                    (ga->g_cmdline_flags & MASM85_SWITCH_HEX) 
+                                    (ga->cmdline_flags & MASM85_SWITCH_HEX) 
                                     ? ".hex" : ".85" );         
         }
         /* attach output */
         gat_attach_io (ga, 
-                        (ga->g_cmdline_flags & MASM85_SWITCH_HEX) ? "wt" : "wb", 
+                        (ga->cmdline_flags & MASM85_SWITCH_HEX) ? "wt" : "wb", 
                         g_output_path, 
-                        (ga->g_cmdline_flags & MASM85_SWITCH_HEX) 
+                        (ga->cmdline_flags & MASM85_SWITCH_HEX) 
                             ? masm85_hex_emitter 
                             : masm85_bin_emitter
                         );
         
         /* make debug output path */
-        if ( ga->g_cmdline_flags & MASM85_SWITCH_DBG ) {
+        if ( ga->cmdline_flags & MASM85_SWITCH_DBG ) {
             gat_cmdln_get_param ( &cmdinfo, "-dbg", g_debug_path );
             if (g_debug_path[0] == '\0') {
                 strcpy (g_debug_path, g_input_path);

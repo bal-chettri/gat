@@ -23,10 +23,10 @@
 
 static void masm85_bin_emit_code (gat *ga, gat_io *io) {
     /* write bytes (binary) to the output file */
-    if ( fwrite (ga->g_bin, ga->g_bin_size, 1, ga->ios[1].fp) != 1) {
+    if ( fwrite (ga->bin, ga->bin_size, 1, ga->ios[1].fp) != 1) {
         gat_fatal_error (ga, GAT_ERR_FILEIO_FAILED, "gat_emit() failed to write output file");
     }
-    ga->g_offset+= ga->g_bin_size;
+    ga->offset+= ga->bin_size;
 }
 
 void masm85_bin_emitter (gat *ga, gat_io *io, gat_emitter_state state) {

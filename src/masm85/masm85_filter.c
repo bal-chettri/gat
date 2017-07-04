@@ -22,7 +22,7 @@
 /* returns 1 if instruction is allowed otherwise 0 */
 int masm85_filter (gat *ga) {
     #define CHECK(_I,_S) \
-    (gat_strcmpi(ga->g_arr_tokens[(_I)],(_S)))
+    (gat_strcmpi(ga->arr_tokens[(_I)],(_S)))
     
     int invalid = 0;
 
@@ -41,7 +41,7 @@ int masm85_filter (gat *ga) {
         invalid = CHECK(1,"psw");
     }
     else if ( CHECK(0,"rst") ) {
-        invalid = (gat_cbyte(ga->g_arr_tokens[1]) > 7);
+        invalid = (gat_cbyte(ga->arr_tokens[1]) > 7);
     }
 
     return !invalid;

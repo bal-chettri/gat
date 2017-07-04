@@ -38,22 +38,22 @@ void gat_init (gat *ga, gat_arch *arch) {
     ga->arch = arch;
 
     ga->fatal_error = 0;
-    ga->g_num_ids = 0;
-    ga->g_num_labels = 0;
+    ga->num_ids = 0;
+    ga->num_labels = 0;
 
-    ga->g_err_count = 0;
-    ga->g_warn_count = 0;
-    ga->g_offset = 0;
-    ga->g_size = 0;
+    ga->err_count = 0;
+    ga->warn_count = 0;
+    ga->offset = 0;
+    ga->size = 0;
 
     ga->num_ios = 0;
 
-    ga->g_pass = 0;
-    ga->g_line_num = 0;
-    ga->g_num_tokens = 0;
+    ga->pass = 0;
+    ga->line_num = 0;
+    ga->num_tokens = 0;
 
-    memset (ga->g_arr_tokens, 0, sizeof(ga->g_arr_tokens));
-    memset (ga->g_arr_raw_tokens, 0, sizeof(ga->g_arr_raw_tokens));
+    memset (ga->arr_tokens, 0, sizeof(ga->arr_tokens));
+    memset (ga->arr_raw_tokens, 0, sizeof(ga->arr_raw_tokens));
 }
 
 /* sets callback */
@@ -69,22 +69,22 @@ int gat_engine (gat *ga) {
     gat_open_files (ga);
 
     /* run PASS #1 (analysis phase) */  
-    ga->g_pass = 1;
+    ga->pass = 1;
     gat_init_pass (ga);
     gat_scan (ga);
         
     /* run PASS #2 (assembly phase) */
-    ga->g_pass = 2;
+    ga->pass = 2;
     gat_init_pass (ga); 
     gat_assemble (ga);
 
     /* print assembly / error report */
-    if (ga->g_err_count == 0) {
-        gat_print (ga, "written %u bytes to %s", ga->g_size, ga->ios[1].path);
+    if (ga->err_count == 0) {
+        gat_print (ga, "written %u bytes to %s", ga->size, ga->ios[1].path);
     }
-    gat_print (ga, "%u error(s) %u warning(s)", ga->g_err_count, ga->g_warn_count);
+    gat_print (ga, "%u error(s) %u warning(s)", ga->err_count, ga->warn_count);
 
-    exit_code = (ga->g_err_count == 0 ? 0 : -1);
+    exit_code = (ga->err_count == 0 ? 0 : -1);
     return exit_code;
 }
 
@@ -95,7 +95,7 @@ void gat_cleanup (gat *ga) {
     gat_close_files (ga);
 
     /* delete ouput files on error */
-    if (ga->g_err_count > 0) {
+    if (ga->err_count > 0) {
         unsigned i = 1; /* output begins at [1] */
         for (; i < ga->num_ios; i++) {
             gat_io *io = ga->ios + i;
@@ -107,7 +107,7 @@ void gat_cleanup (gat *ga) {
 /* initializes a pass state */
 void gat_init_pass (gat *ga) {
     gat_free_tokens (ga);
-    ga->g_line_num = 0;
+    ga->line_num = 0;
 }
 
 /* prints message on screen. masm85 doesn't directly print on the stdout or FILE.
@@ -140,7 +140,7 @@ void gat_error (gat *ga, int err_no, const char *format, ...) {
     va_list arg_list;
 
     /* increment error count */
-    ++ga->g_err_count;
+    ++ga->err_count;
 
     if (ga->callback != NULL) {
         /* build error description string */    
@@ -154,7 +154,7 @@ void gat_error (gat *ga, int err_no, const char *format, ...) {
         err.errno = err_no;
         err.desc = err_desc;
         err.file = ga->ios[0].path;
-        err.line = ga->g_line_num;
+        err.line = ga->line_num;
         err.col = -1;
 
         /* report error */
@@ -171,7 +171,7 @@ void gat_warning (gat *ga, int err_no, const char *format, ...) {
     va_list arg_list;
 
     /* increment error count */
-    ++ga->g_warn_count;
+    ++ga->warn_count;
 
     if (ga->callback != NULL) {
         /* build error description string */    
@@ -185,7 +185,7 @@ void gat_warning (gat *ga, int err_no, const char *format, ...) {
         err.errno = err_no;
         err.desc = err_desc;
         err.file =  ga->ios[0].path;
-        err.line = ga->g_line_num;
+        err.line = ga->line_num;
         err.col = -1;
 
         /* report error */
@@ -204,7 +204,7 @@ void gat_fatal_error (gat *ga, int err_no, const char *format, ...) {
     va_list arg_list;
 
     ga->fatal_error = 1;
-    ++ga->g_err_count;
+    ++ga->err_count;
 
     if (ga->callback != NULL) {
         va_start (arg_list, format);
@@ -217,7 +217,7 @@ void gat_fatal_error (gat *ga, int err_no, const char *format, ...) {
         err.errno = err_no;
         err.desc = err_desc;
         err.file =  ga->ios[0].path;
-        err.line = ga->g_line_num;
+        err.line = ga->line_num;
         err.col = -1;
 
         ga->callback (ga, GAT_CALLBACK_ERROR, &err, ga->context);

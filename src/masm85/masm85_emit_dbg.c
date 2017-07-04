@@ -30,14 +30,14 @@ static void masm85_dbg_emit_begin_assembly (gat *ga, gat_io *io) {
 
 static void masm85_dbg_emit_end_assembly (gat *ga, gat_io *io) {
     rewind (io->fp); /* reset cursor pos to write code size */
-    if ( fwrite(&ga->g_size, sizeof(uint32_t), 1, io->fp) != 1 ) {
+    if ( fwrite(&ga->size, sizeof(uint32_t), 1, io->fp) != 1 ) {
         gat_fatal_error (ga, GAT_ERR_FILEIO_FAILED, "failed to update DBG header");
     }
 }
 
 static void masm85_dbg_emit_code (gat *ga, gat_io *io) {
-    if ( (fwrite (&ga->g_offset, sizeof(uint16_t), 1, io->fp) != 1) ||
-         (fwrite (&ga->g_line_num, sizeof(uint32_t), 1, io->fp) != 1) ) {
+    if ( (fwrite (&ga->offset, sizeof(uint16_t), 1, io->fp) != 1) ||
+         (fwrite (&ga->line_num, sizeof(uint32_t), 1, io->fp) != 1) ) {
         gat_fatal_error (ga, GAT_ERR_FILEIO_FAILED, "gat_emit() failed to write debug file");
     }
 }

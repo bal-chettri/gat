@@ -39,17 +39,17 @@ unsigned gat_tokenize_line (gat *ga) {
     gat_tokenize (ga);
 
 #if 0/*_DEBUG*/
-    if (ga->g_pass == 1) {
-        gat_dump_tokens (ga->g_arr_raw_tokens, ga->g_num_tokens);
+    if (ga->pass == 1) {
+        gat_dump_tokens (ga->arr_raw_tokens, ga->num_tokens);
     }
 #endif
 
     /* set token strings */
-    for (i = 0; i < ga->g_num_tokens; i++) {
-        ga->g_arr_tokens[i] = ga->g_arr_raw_tokens[i].string;
+    for (i = 0; i < ga->num_tokens; i++) {
+        ga->arr_tokens[i] = ga->arr_raw_tokens[i].string;
     }
 
-    return ga->g_num_tokens;
+    return ga->num_tokens;
 }
 
 size_t gat_tokenize (gat *ga) {
@@ -63,15 +63,15 @@ size_t gat_tokenize (gat *ga) {
     gat_token *token;
     const size_t max_tokens = GAT_MAX_TOKENS;
 
-    ga->g_num_tokens = 0;
-    token = ga->g_arr_raw_tokens;
+    ga->num_tokens = 0;
+    token = ga->arr_raw_tokens;
 
     /* init vars */
     flag_sym = 0;
     flag_quote = 0;
     quote_char = '\"';
 
-    head = ga->g_str_line;
+    head = ga->str_line;
 
     while (1) {
         /* skip white space */
@@ -86,7 +86,7 @@ size_t gat_tokenize (gat *ga) {
         }
 
         /* check for token limit */
-        if (ga->g_num_tokens == max_tokens ) {
+        if (ga->num_tokens == max_tokens ) {
             gat_error (ga, GAT_ERR_TOO_MANY_TOKENS, "too many tokens");
             break;
         }
@@ -174,7 +174,7 @@ size_t gat_tokenize (gat *ga) {
         }
 
         /* increment the token counter */
-        ++ga->g_num_tokens;
+        ++ga->num_tokens;
 
         ++token;
     
@@ -189,18 +189,18 @@ size_t gat_tokenize (gat *ga) {
     }
 
     /* return number of tokens parsed */
-    return ga->g_num_tokens;
+    return ga->num_tokens;
 }
 
 /* free all raw tokens. note that this does not reset the token strings */
 void gat_free_tokens (gat *ga) {
     int i;
     for (i = 0; i < GAT_MAX_TOKENS; i++) {
-        if (ga->g_arr_raw_tokens[i].string != NULL) {
-            free (ga->g_arr_raw_tokens[i].string);
-            ga->g_arr_raw_tokens[i].string = NULL;
-            ga->g_arr_raw_tokens[i].length = 0;
-            ga->g_arr_raw_tokens[i].type = GAT_TOK_INVALID;
+        if (ga->arr_raw_tokens[i].string != NULL) {
+            free (ga->arr_raw_tokens[i].string);
+            ga->arr_raw_tokens[i].string = NULL;
+            ga->arr_raw_tokens[i].length = 0;
+            ga->arr_raw_tokens[i].type = GAT_TOK_INVALID;
         }
     }
 }

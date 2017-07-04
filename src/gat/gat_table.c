@@ -48,8 +48,8 @@ int gat_search_instr (gat *ga, const char *strtext) {
 /* searches and returns index of id */
 int gat_search_id (gat *ga, const char *id) {
     unsigned i;
-    for (i = 0; i < ga->g_num_ids; i++) {
-        if ( gat_strcmp (ga->g_arr_ids[i].name, id) ) {
+    for (i = 0; i < ga->num_ids; i++) {
+        if ( gat_strcmp (ga->arr_ids[i].name, id) ) {
             return i; /* found at i */
         }
     } 
@@ -67,14 +67,14 @@ int gat_define_id (gat *ga, const char *id, uint16_t data, uint8_t id_type) {
 
     if (flag_dup) {
         gat_error (ga, GAT_ERR_REDEFINED, "redefinition : %s", id);
-    } else if (ga->g_num_ids == GAT_MAX_IDS) {
+    } else if (ga->num_ids == GAT_MAX_IDS) {
         gat_error (ga, GAT_ERR_TOO_MANY_IDS, "too many ids");
     } else if (strlen(id) > GAT_MAX_ID_LEN) {
         gat_error (ga, GAT_ERR_INVALID_ID, "identifier too long : %s", id);
     } else {
-        strcpy (ga->g_arr_ids[ga->g_num_ids].name, id);
-        ga->g_arr_ids[ga->g_num_ids].idtype = id_type;
-        ga->g_arr_ids[ga->g_num_ids++].data = data;
+        strcpy (ga->arr_ids[ga->num_ids].name, id);
+        ga->arr_ids[ga->num_ids].idtype = id_type;
+        ga->arr_ids[ga->num_ids++].data = data;
         return 1; /* new id defined */
     }
 
@@ -84,8 +84,8 @@ int gat_define_id (gat *ga, const char *id, uint16_t data, uint8_t id_type) {
 /* searches and returns index of label */
 int gat_search_label (gat *ga, const char *id) {
     unsigned i;
-    for (i = 0; i < ga->g_num_labels; i++) {
-        if ( gat_strcmp (ga->g_arr_labels[i].name, id) ) {
+    for (i = 0; i < ga->num_labels; i++) {
+        if ( gat_strcmp (ga->arr_labels[i].name, id) ) {
             return i; /* found at i */
         }
     }
@@ -103,14 +103,14 @@ int gat_define_label (gat *ga, const char *id, uint16_t address) {
 
     if (flag_dup) {
         gat_error (ga, GAT_ERR_REDEFINED, "redefinition : %s", id);
-    } else if (ga->g_num_labels == GAT_MAX_LABELS)
+    } else if (ga->num_labels == GAT_MAX_LABELS)
         gat_error (ga, GAT_ERR_TOO_MANY_IDS, "too many labels");    
     else if (strlen(id) > GAT_MAX_ID_LEN) {
         gat_error (ga, GAT_ERR_INVALID_ID, "identifier too long : %d", id);
     } else {
         /* add new label to label list */
-        strcpy (ga->g_arr_labels [ga->g_num_labels].name, id);
-        ga->g_arr_labels [ga->g_num_labels++].address = address;        
+        strcpy (ga->arr_labels [ga->num_labels].name, id);
+        ga->arr_labels [ga->num_labels++].address = address;        
         return 1; /* new label defined */
     }
 
