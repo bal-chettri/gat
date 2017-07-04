@@ -60,19 +60,19 @@ static void masm85_usage (gat *ga);
 
 /* process command line */  
 void masm85_process_commandline (gat *ga, int argc, char *argv[]) {
-    char g_input_path [GAT_MAX_PATH];
-    char g_output_path [GAT_MAX_PATH];
-    char g_debug_path [GAT_MAX_PATH];       
+    char input_path [GAT_MAX_PATH];
+    char output_path [GAT_MAX_PATH];
+    char debug_path [GAT_MAX_PATH];
 
      /* [0] = command name, [1] first arg */
     gat_cmdline cmdinfo = { argc - 1, &argv[1] };
 
-    *g_input_path = *g_output_path = *g_debug_path = '\0';
+    *input_path = *output_path = *debug_path = '\0';
 
     /* chek for input path*/
     if ( (argc > 1) && (argv[1][0] != GAT_CMDLN_SWITCH) ) {
-        strncpy ( g_input_path, argv[1], GAT_MAX_PATH );
-        gat_attach_io (ga, "rt", g_input_path, NULL);
+        strncpy ( input_path, argv[1], GAT_MAX_PATH );
+        gat_attach_io (ga, "rt", input_path, NULL);
     }
 
     /* scan command line for switches */
@@ -87,7 +87,7 @@ void masm85_process_commandline (gat *ga, int argc, char *argv[]) {
     }
     
     /* check for invalid switches */
-    if (g_input_path[0] == '\0') {
+    if (input_path[0] == '\0') {
         /* these switches can't be used without input-path */
         if ( (ga->cmdline_flags & MASM85_SWITCH_HEX) || 
              (ga->cmdline_flags & MASM85_SWITCH_85) ||
@@ -108,27 +108,27 @@ void masm85_process_commandline (gat *ga, int argc, char *argv[]) {
         masm85_usage (ga);
     }
 
-    if (g_input_path[0] == '\0') {
+    if (input_path[0] == '\0') {
         masm85_usage (ga);
     } else {
         /* make output path */
         if ( ga->cmdline_flags & MASM85_SWITCH_O ) {
-            gat_cmdln_get_param ( &cmdinfo, "-o", g_output_path );
-            if (g_output_path[0] == '\0') {
+            gat_cmdln_get_param ( &cmdinfo, "-o", output_path );
+            if (output_path[0] == '\0') {
                 gat_fatal_error (ga, GAT_ERR_INVALID_OUTPUT_PATH, "output-path not specified");
             }
         } else {
             ga->cmdline_flags|= MASM85_SWITCH_O;
-            strcpy (g_output_path, g_input_path);
+            strcpy (output_path, input_path);
             /* attach .hex or .85 extension if required */
-            gat_attach_extension ( ga, g_output_path, 
+            gat_attach_extension ( ga, output_path,
                                     (ga->cmdline_flags & MASM85_SWITCH_HEX) 
                                     ? ".hex" : ".85" );         
         }
         /* attach output */
         gat_attach_io (ga, 
                         (ga->cmdline_flags & MASM85_SWITCH_HEX) ? "wt" : "wb", 
-                        g_output_path, 
+                        output_path,
                         (ga->cmdline_flags & MASM85_SWITCH_HEX) 
                             ? masm85_hex_emitter 
                             : masm85_bin_emitter
@@ -136,12 +136,12 @@ void masm85_process_commandline (gat *ga, int argc, char *argv[]) {
         
         /* make debug output path */
         if ( ga->cmdline_flags & MASM85_SWITCH_DBG ) {
-            gat_cmdln_get_param ( &cmdinfo, "-dbg", g_debug_path );
-            if (g_debug_path[0] == '\0') {
-                strcpy (g_debug_path, g_input_path);
+            gat_cmdln_get_param ( &cmdinfo, "-dbg", debug_path );
+            if (debug_path[0] == '\0') {
+                strcpy (debug_path, input_path);
                 /* attach .dbg extension if required */
-                gat_attach_extension (ga, g_debug_path, ".dbg" );
-                gat_attach_io (ga, "wb", g_debug_path, masm85_dbg_emitter);
+                gat_attach_extension (ga, debug_path, ".dbg" );
+                gat_attach_io (ga, "wb", debug_path, masm85_dbg_emitter);
             }
         }
     }
