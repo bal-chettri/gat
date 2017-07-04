@@ -28,3 +28,6 @@
 
 # VC++ files
 *.ilk
+
+# VS 2010 ipch dir
+ipch
