@@ -104,16 +104,16 @@ typedef void (*gat_callback) \
 (struct _gat *ga, gat_callback_type type, void *data, void *ctx);
 
 struct _gat_io;
-typedef enum _gat_emitter_mode {
+typedef enum _gat_emitter_state {
     GAT_EMIT_BEGIN_ASSEMBLY,
     GAT_EMIT_END_ASSEMBLY,
     GAT_EMIT_SET_ORG,
     GAT_EMIT_CODE
-}gat_emitter_mode;
+}gat_emitter_state;
 
 /* gat_emitter type */
 typedef void (*gat_emitter) \
-(struct _gat *, struct _gat_io *, gat_emitter_mode);
+(struct _gat *, struct _gat_io *, gat_emitter_state);
 
 /* define structure types */
 

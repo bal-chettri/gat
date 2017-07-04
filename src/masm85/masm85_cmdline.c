@@ -52,9 +52,9 @@ static uint32_t arr_cmdline_switchflags [/*MASM_NUM_SWITCHES*/] = {
 };
 
 /* prototypes */
-extern void masm85_hex_emitter (gat *, gat_io *, gat_emitter_mode);
-extern void masm85_bin_emitter (gat *, gat_io *, gat_emitter_mode);
-extern void masm85_dbg_emitter (gat *, gat_io *, gat_emitter_mode);
+extern void masm85_hex_emitter (gat *, gat_io *, gat_emitter_state);
+extern void masm85_bin_emitter (gat *, gat_io *, gat_emitter_state);
+extern void masm85_dbg_emitter (gat *, gat_io *, gat_emitter_state);
 
 static void masm85_usage (gat *ga);
 

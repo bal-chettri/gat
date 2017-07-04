@@ -138,8 +138,8 @@ static void masm85_hex_set_org (gat *ga, gat_io *io) {
     gat_begin_hex_record (ga, io);
 }
 
-void masm85_hex_emitter (gat *ga, gat_io *io, gat_emitter_mode mode) {
-    switch(mode) {
+void masm85_hex_emitter (gat *ga, gat_io *io, gat_emitter_state state) {
+    switch(state) {
     case GAT_EMIT_BEGIN_ASSEMBLY:
         masm85_hex_emit_begin_assembly (ga, io);
         break;

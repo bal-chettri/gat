@@ -29,8 +29,8 @@ static void masm85_bin_emit_code (gat *ga, gat_io *io) {
     ga->g_offset+= ga->g_bin_size;
 }
 
-void masm85_bin_emitter (gat *ga, gat_io *io, gat_emitter_mode mode) {
-    switch(mode) {
+void masm85_bin_emitter (gat *ga, gat_io *io, gat_emitter_state state) {
+    switch(state) {
     case GAT_EMIT_CODE: 
         masm85_bin_emit_code (ga, io);
         break;

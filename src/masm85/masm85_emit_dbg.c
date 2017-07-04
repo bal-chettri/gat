@@ -42,8 +42,8 @@ static void masm85_dbg_emit_code (gat *ga, gat_io *io) {
     }
 }
 
-void masm85_dbg_emitter (gat *ga, gat_io *io, gat_emitter_mode mode) {
-    switch(mode) {
+void masm85_dbg_emitter (gat *ga, gat_io *io, gat_emitter_state state) {
+    switch(state) {
     case GAT_EMIT_BEGIN_ASSEMBLY:
         masm85_dbg_emit_begin_assembly (ga, io);
         break;
