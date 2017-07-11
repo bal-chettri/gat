@@ -31,3 +31,7 @@
 
 # VS 2010 ipch dir
 ipch
+
+# VS 2010 ouput folders
+builds/vs_2010/Debug
+builds/vs_2010/Release
