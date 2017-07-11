@@ -51,8 +51,6 @@ typedef char * gat_char;
 #define GAT_MAX_LABELS              GAT_MAX_IDS
 #define GAT_MAX_TOKENS              4
 #define GAT_MAX_TOKEN_LEN           16
-#define GAT_MAX_DIRECTIVES          4
-#define GAT_MAX_INSTRUCTIONS        80
 #define GAT_MAX_MNEMONIC_LEN        4
 #define GAT_MAX_ID_LEN              16
 #define GAT_MAX_PATH                255
@@ -234,10 +232,10 @@ typedef struct _gat {
     uint16_t rec_length;
     uint32_t offset_hexrec;
     uint8_t checksum;
+    gat_dirt *dirt_table;
+    unsigned len_dirt_table;
+    gat_instr *instr_table;
+    unsigned len_instr_table;
 }gat;
-
-/* externs */
-extern gat_dirt g_dirt_table [GAT_MAX_DIRECTIVES];
-extern gat_instr g_instr_table [GAT_MAX_INSTRUCTIONS];
 
 #endif /* !__gat_types_h__ */

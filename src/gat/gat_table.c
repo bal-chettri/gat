@@ -27,11 +27,11 @@
 int gat_search_instr (gat *ga, const char *strtext) {
     int start_index, end_index, mid_index, rescmp;    
     start_index = 0;
-    end_index = sizeof(g_instr_table) / sizeof(g_instr_table[0]) - 1;
+    end_index = ga->len_instr_table - 1;
     
     while (end_index >= start_index) {
         mid_index = start_index + (end_index - start_index) / 2;
-        rescmp = strcmpi (g_instr_table[mid_index].mnemonic, strtext);
+        rescmp = strcmpi (ga->instr_table[mid_index].mnemonic, strtext);
         if (  rescmp > 0 ) {
             end_index = mid_index - 1;
         } else if ( rescmp < 0 ) {

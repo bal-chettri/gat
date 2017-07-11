@@ -302,18 +302,18 @@ int gat_parse_label (gat *ga) {
 
 /* scans for directives */
 void gat_scan_directives (gat *ga, int *dirt, int *end) {
-    int i;
+    unsigned i;
 
     *dirt = *end = 0;
 
-    for (i = 0; i < sizeof(g_dirt_table) / sizeof(g_dirt_table[0]); i++) {
-        if (g_dirt_table[i].token_index >= ga->num_tokens) {
+    for (i = 0; i < ga->len_dirt_table; i++) {
+        if (ga->dirt_table[i].token_index >= ga->num_tokens) {
             continue; /* not enough tokens to parse command */
         }
 
         /* test for command */
-        if (!gat_strcmpi(ga->arr_tokens[g_dirt_table[i].token_index], 
-                        g_dirt_table[i].command)) {
+        if (!gat_strcmpi(ga->arr_tokens[ga->dirt_table[i].token_index],
+                        ga->dirt_table[i].command)) {
             continue;
         }
 
@@ -321,16 +321,16 @@ void gat_scan_directives (gat *ga, int *dirt, int *end) {
         *dirt = 1;
 
         /* check for number of tokens */
-        if (ga->num_tokens != g_dirt_table[i].num_tokens) {
-            const char *name = *g_dirt_table[i].command == ':' 
-                                ? "label" : g_dirt_table[i].command;
+        if (ga->num_tokens != ga->dirt_table[i].num_tokens) {
+            const char *name = *ga->dirt_table[i].command == ':'
+                                ? "label" : ga->dirt_table[i].command;
             gat_error (ga, GAT_ERR_INVALID_OPERANDS, "invalid number of operands : %s", 
                         name);
             return;
         }
 
         /* parse directive */
-        switch (g_dirt_table[i].token) {
+        switch (ga->dirt_table[i].token) {
         case GAT_END:
             *end = 1; break;
         case GAT_ORG:               
@@ -341,25 +341,25 @@ void gat_scan_directives (gat *ga, int *dirt, int *end) {
             gat_parse_equ (ga); break;
         default:
             GAT_ASSERTE(0, \
-            "unsupported directive found in g_dirt_table table.");
+            "unsupported directive found in directive table.");
         }
     }
 }
 
 /* parse directives; silent on assembly */
 void gat_parse_directives (gat *ga, int *dirt, int *end) {
-    int i;
+    unsigned i;
 
     *dirt = *end = 0;
 
-    for (i = 0; i < sizeof(g_dirt_table) / sizeof(g_dirt_table[0]); i++) {
-        if (g_dirt_table[i].token_index >= ga->num_tokens) {
+    for (i = 0; i < ga->len_dirt_table; i++) {
+        if (ga->dirt_table[i].token_index >= ga->num_tokens) {
             continue; /* not enough tokens to parse command */
         }
 
         /* test for command */
-        if (!gat_strcmpi(ga->arr_tokens[g_dirt_table[i].token_index], 
-                        g_dirt_table[i].command)) {
+        if (!gat_strcmpi(ga->arr_tokens[ga->dirt_table[i].token_index],
+                        ga->dirt_table[i].command)) {
             continue;
         }
 
@@ -367,12 +367,12 @@ void gat_parse_directives (gat *ga, int *dirt, int *end) {
         *dirt = 1;
 
         /* check for number of tokens */
-        if (ga->num_tokens != g_dirt_table[i].num_tokens) {
+        if (ga->num_tokens != ga->dirt_table[i].num_tokens) {
             return; /* error reporting already done in pass #1 */
         }
 
         /* parse directive */
-        switch (g_dirt_table[i].token) {
+        switch (ga->dirt_table[i].token) {
         case GAT_END:
             *end = 1; break;
 
@@ -506,7 +506,7 @@ int gat_scan (gat *ga) {
             if (index == -1) {
                 gat_error (ga, GAT_ERR_INVALID_INSTRUCTION, "invalid instruction : %s", 
                             ga->arr_tokens[0]);
-            } else if (gat_scan_instruction (ga, &g_instr_table[index])) {
+            } else if (gat_scan_instruction (ga, &ga->instr_table[index])) {
                 if (ga->offset + ga->bin_size > 65536){
                     gat_fatal_error (ga, GAT_ERR_OFFSET_OUT_OF_RANGE, "offset out of range");
                 }
@@ -548,7 +548,7 @@ int gat_assemble (gat *ga) {
         if (!flag_dirt) {
             index = gat_search_instr (ga, ga->arr_tokens[0]);
             if (index != -1) {
-                gat_assemble_instruction (ga, &g_instr_table[index]);
+                gat_assemble_instruction (ga, &ga->instr_table[index]);
             }
         }
     }  /* end wile */

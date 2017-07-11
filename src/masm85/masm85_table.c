@@ -22,7 +22,7 @@
 #include "gat.h"
 
 /* assemble directive table */
-gat_dirt g_dirt_table [GAT_MAX_DIRECTIVES] = {
+gat_dirt g_dirt_table [] = {
     /*{ token, command, token_index, num_tokens }*/
     { GAT_EQU, "equ", 1, 3}, /* id equ byte|dbl|id|label */
     { GAT_ORG, "org", 0, 2}, /* org dbl */
@@ -30,9 +30,11 @@ gat_dirt g_dirt_table [GAT_MAX_DIRECTIVES] = {
     { GAT_LABEL, ":", 1, 2 }, /* id: */
 };
 
+/* Length of directive table. */
+const int g_len_dirt_table = sizeof(g_dirt_table) / sizeof(g_dirt_table[0]);
+
 /* instruction table */
-gat_instr 
-g_instr_table [GAT_MAX_INSTRUCTIONS] =
+gat_instr g_instr_table [] =
 {
     /*{ mnemonic, opcode, num_operands, type_operands[3], type_options[3] }*/
     { "aci", 0xCE, 1, { GAT_OPRND_BYTE }, { 0 } },
@@ -130,3 +132,6 @@ g_instr_table [GAT_MAX_INSTRUCTIONS] =
     { "xri", 0xEE, 1, { GAT_OPRND_BYTE }, { 0 } },
     { "xthl", 0xE3, 0 },        
 };
+
+/* Length of instruction table. */
+const int g_len_instr_table = sizeof(g_instr_table) / sizeof(g_instr_table[0]);

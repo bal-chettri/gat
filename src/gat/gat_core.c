@@ -32,7 +32,7 @@
 #endif
 
 /* initializes the assembler */
-void gat_init (gat *ga, gat_arch *arch) {   
+void gat_init (gat *ga, gat_arch *arch, gat_dirt *dirt_table, unsigned len_dirt_table, gat_instr *instr_table, unsigned len_instr_table) {
     ga->callback = NULL;
     ga->context = NULL;
     ga->arch = arch;
@@ -54,6 +54,11 @@ void gat_init (gat *ga, gat_arch *arch) {
 
     memset (ga->arr_tokens, 0, sizeof(ga->arr_tokens));
     memset (ga->arr_raw_tokens, 0, sizeof(ga->arr_raw_tokens));
+
+    ga->dirt_table = dirt_table;
+    ga->len_dirt_table = len_dirt_table;
+    ga->instr_table = instr_table;
+    ga->len_instr_table = len_instr_table;
 }
 
 /* sets callback */

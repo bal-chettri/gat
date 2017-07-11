@@ -26,7 +26,7 @@
 extern "C" {
 #endif
 
-void gat_init (gat *ga, gat_arch *arch);
+void gat_init (gat *ga, gat_arch *arch, gat_dirt *dirt_table, unsigned len_dirt_table, gat_instr *instr_table, unsigned len_instr_table);
 void gat_set_callback (gat *ga, gat_callback callback, void *context);
 int gat_engine (gat *ga);
 void gat_cleanup (gat *ga);

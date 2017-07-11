@@ -30,6 +30,10 @@
 extern void masm85_callback (gat *, gat_callback_type, void *, void *);
 extern void masm85_process_commandline (gat *ga, int argc, char *argv[]);
 extern gat_arch masm85_arch;
+extern gat_dirt g_dirt_table[];
+extern gat_instr g_instr_table[];
+extern unsigned g_len_dirt_table;
+extern unsigned g_len_instr_table;
 
 #ifdef WINDOWS
 int _tmain(int argc, _TCHAR* argv[]) {
@@ -40,7 +44,7 @@ int main (int argc, char *argv[]) {
     int exitcode = 0;
     gat _ga, *ga = &_ga;
     
-    gat_init (ga, &masm85_arch);
+    gat_init (ga, &masm85_arch, g_dirt_table, g_len_dirt_table, g_instr_table, g_len_instr_table);
     gat_set_callback ( ga, masm85_callback, NULL );
 
     masm85_process_commandline ( ga, argc, argv );
