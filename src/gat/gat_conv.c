@@ -18,7 +18,7 @@
  */
 /** gat_conv.cpp  gat data conversion routines. */
 #include "gat_conv.h"
-#include "gat_str.h" /* C4996 warning disable */
+#include "gat_str.h"
 #include <ctype.h>
 
 /* converts hex token to integer value */

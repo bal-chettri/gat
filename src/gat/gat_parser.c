@@ -37,7 +37,7 @@
 #  define GAT_ASSERTE(C,M)
 #else
 #  define GAT_ASSERTE(C,M) if(!(C)) { \
-   printf("masm assertion: %s\n",M); \
+   printf("gat assertion: %s\n",M); \
    assert(C); \
 }
 #endif

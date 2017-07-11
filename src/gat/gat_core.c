@@ -125,7 +125,6 @@ void gat_print (gat *ga, const char *format, ...) {
             va_end (arg_list);
 
             /* redirect message to callback if it is set */
-            /* ga->callback (ga, GAT_CALLBACK_TEXT, "masm85 : ", ga->context); */
             ga->callback (ga, GAT_CALLBACK_TEXT, buff, ga->context);
         
             free (buff);
